@@ -1,20 +1,14 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from project import app, db
+from project.models import BlogPost
+from flask import flash, redirect, session, url_for, render_template, Blueprint
 from functools import wraps
-from flask.ext.sqlalchemy import SQLAlchemy
 
-app = Flask(__name__)
 
-# config
-import os
-app.config.from_object(os.environ['APP_SETTINGS'])
-db = SQLAlchemy(app)
+home_blueprint = Blueprint(
+    'home', __name__,
+    template_folder='templates'
+)
 
-# import db schema
-from models import *
-
-# register blueprints
-from project.users.views import users_blueprint
-app.register_blueprint(users_blueprint)
 
 def login_required(test):
     @wraps(test)
@@ -27,16 +21,12 @@ def login_required(test):
     return wrap
 
 
-@app.route('/')
+@home_blueprint.route('/')
 @login_required
 def home():
     posts = db.session.query(BlogPost).all()
     return render_template("index.html", posts=posts)
 
-@app.route('/welcome')
+@home_blueprint.route('/welcome')
 def welcome():
     return render_template("welcome.html")
-
-
-if __name__ == '__main__':
-    app.run()
