@@ -5,11 +5,11 @@ from models import BlogPost
 db.create_all()
 
 # insert data
-db.session.add(BlogPost("Good", "I\'m good."))
-db.session.add(BlogPost("Well", "I\'m well."))
-db.session.add(BlogPost("Excellent", "I\'m excellent."))
-db.session.add(BlogPost("Okay", "I\'m okay."))
-db.session.add(BlogPost("mysql", "mysql is setup."))
+db.session.add(BlogPost("Good", "I\'m good.", 1))
+db.session.add(BlogPost("Well", "I\'m well.", 1))
+db.session.add(BlogPost("Excellent", "I\'m excellent.", 1))
+db.session.add(BlogPost("Okay", "I\'m okay.", 1))
+db.session.add(BlogPost("mysql", "mysql is setup.", 1))
 
 # commit the changes
 db.session.commit()
